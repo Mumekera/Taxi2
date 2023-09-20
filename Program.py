@@ -1,5 +1,4 @@
 from Messages import Message
-from District import District
 from Car import Car
 
 def main():
