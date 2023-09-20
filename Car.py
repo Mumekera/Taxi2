@@ -10,3 +10,10 @@ class Car:
             "Hyundai Lantra"
         ]
         self.Status = True
+        self.District = {
+            "Retkinia": 4, 
+            "Łódź Kaliska": 2, 
+            "Śródmieście": 0,
+            "Widzew": 5,
+            "Janów": 7
+        }
