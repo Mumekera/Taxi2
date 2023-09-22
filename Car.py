@@ -21,7 +21,7 @@ def get_closest_car(cars, district):
                 closest_car = car
 
     if closest_car:
-        closest_car.status = False  
+        closest_car.status = False
 
     return closest_car
 

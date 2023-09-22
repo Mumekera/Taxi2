@@ -25,17 +25,29 @@ class Messages:
 
     def show_reservation_screen(cars):
         print(Messages.reservation_screen)
-        district_choice = int(input("Enter the district number you want to reserve a taxi in: "))
-        if 1 <= district_choice <= 5:
-            chosen_district = list(district_distances.keys())[district_choice - 1]
-            closest_car = get_closest_car(cars, chosen_district)
-            if closest_car:
-                print(f"Taxi reserved in {chosen_district} district. Closest available car: {closest_car.brand}")
-            else:
-                print(f"No available cars in {chosen_district} district.")
-        else:
-            print("Invalid district choice.")
+        
+        while True:
+            district_choice_input = input("Enter the district number you want to reserve a taxi in: ")
+            if not district_choice_input.isdigit():
+                print("Please enter a number between 1 and 5.")
+                continue
             
+            district_choice = int(district_choice_input)
+            
+            if 1 <= district_choice <= 5:
+                chosen_district = list(district_distances.keys())[district_choice - 1]
+                closest_car = get_closest_car(cars, chosen_district)
+                if closest_car:
+                        print(f"Taxi reserved in {chosen_district} district. Closest available car: {closest_car.brand}")
+                        break
+                else:
+                        print(f"No available cars")
+                        break
+            else:
+                    print("Invalid district choice.")
+                
+
+    
     def show_available_cars(cars):
         print("Available Cars and Their Locations:")
         for car in cars:
