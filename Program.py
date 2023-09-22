@@ -1,22 +1,25 @@
-from Messages import Message
-from Car import Car
+from Messages import Messages
+from Car import create_random_cars
+
+cars = create_random_cars()
 
 def main():
-    message = Message()
     
     while True:
-        choice = message.starting_screen()
-        choice = int(choice)
+        print(Messages.MAIN_MENU)
+        choice = input()
 
-        if choice == 1:
-            message.list_of_districts()
-        elif choice == 2:
-            message.reservation_screen()
-        elif choice == 3:
-            print("ZAKOŃCZONO PROGRAM")
+        if choice == '1':
+            Messages.show_districts()
+        elif choice == '2':
+            Messages.show_available_cars(cars)
+        elif choice == '3':
+            Messages.show_reservation_screen(cars)
+        elif choice == "4":
+            print("Exiting the app.")
             break
         else:
-            print("Niepoprawny wybór. Wprowadź 1, 2 lub 3.")
+            print("Invalid choice. Please select a valid option.")
 
 if __name__ == "__main__":
     main()

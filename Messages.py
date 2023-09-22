@@ -1,36 +1,43 @@
-from Car import Car
+from Car import district_distances, get_closest_car
 
-class Message:
-    def __init__(self):
-        self.start_car = Car()
+class Messages:
+    MAIN_MENU = """
+    Taxi Reservation System
+    1. Show list of districts
+    2. Show list of cars
+    3. Show reservation screen
+    4. Exit
+    Enter your choice: """
 
-    def starting_screen(self):
-        print()
-        print("WYBIERZ OPCJĘ:")
-        print()
-        print("1 => LISTA WSZYSTKICH DZIELNIC I TAKSÓWEK")
-        print()
-        print("2 => ZAMÓW TAKSÓWKĘ")
-        print()
-        print("3 => ZAKOŃCZ PROGRAM")
-        print()
-        userchoice = input(" WYBIERZ 1, 2 LUB 3: ")
-        clear_screen()
-        return userchoice
-        
-    def list_of_districts(self):
-        districts = self.start_car.District
-        for numeral, key in enumerate(districts.keys(), start=1):
-            print (f"{numeral}. {key}")
+    district_list = """
+    List of Districts:
+    1. Retkinia (4 km from the center)
+    2. Łódź Kaliska (2 km from the center)
+    3. Śródmieście (0 km from the center)
+    4. Widzew (5 km from the center)
+    5. Janów (7 km from the center)
+    """
 
-    def reservation_screen(self):
-        print()
-        print("PROSZĘ PODAĆ NUMER DZIELNICY DO KTÓREJ CHCESZ WEZWAĆ TAKSÓWKĘ:")
-        self.list_of_districts()
-        userchoice = input()
-        clear_screen()
-        return userchoice
+    reservation_screen = "Reservation Screen"
 
-def clear_screen():
-    import os
-    os.system('cls' if os.name == 'nt' else 'clear')
+    def show_districts():
+        print(Messages.district_list)
+
+    def show_reservation_screen(cars):
+        print(Messages.reservation_screen)
+        district_choice = int(input("Enter the district number you want to reserve a taxi in: "))
+        if 1 <= district_choice <= 5:
+            chosen_district = list(district_distances.keys())[district_choice - 1]
+            closest_car = get_closest_car(cars, chosen_district)
+            if closest_car:
+                print(f"Taxi reserved in {chosen_district} district. Closest available car: {closest_car.brand}")
+            else:
+                print(f"No available cars in {chosen_district} district.")
+        else:
+            print("Invalid district choice.")
+            
+    def show_available_cars(cars):
+        print("Available Cars and Their Locations:")
+        for car in cars:
+            status = "Free" if car.status else "Busy"
+            print(f"Car: {car.brand}, District: {car.district}, Distance from center: {district_distances[car.district]} km, Status: {status}")
