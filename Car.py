@@ -42,7 +42,7 @@ def create_random_cars():
             "Toyota Avensis",
             "Mercedes E220",
             "Hyundai Lantra"
-            ]
+    ]
     districts = list(district_distances.keys())
     cars = [Car(brand) for brand in brands]
 

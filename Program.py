@@ -1,10 +1,11 @@
 from Messages import Messages
 from Car import create_random_cars
 
-cars = create_random_cars()
+
 
 def main():
-    
+   
+    cars = create_random_cars()
     while True:
         print(Messages.MAIN_MENU)
         choice = input()
