@@ -5,7 +5,6 @@ from Car import Car
 def main():
    
     cars = Car.assign_random_district()
-    print(cars)
     
     while True:
         print(Messages.main_menu)
