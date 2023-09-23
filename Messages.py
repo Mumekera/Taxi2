@@ -1,55 +1,72 @@
-from Car import district_distances, get_closest_car
+from Car import Car
+
 
 class Messages:
-    MAIN_MENU = """
-    Taxi Reservation System
-    1. Show list of districts
-    2. Show list of cars
-    3. Show reservation screen
-    4. Exit
-    Enter your choice: """
+    main_menu = """
+Program do rezerwacji taxi
+1. Pokaż listę dzielnic
+2. Pokaż listę taksówek
+3. Ekran rezerwacji
+4. Wyjście
+Twój wybór: 
+"""
 
     district_list = """
-    List of Districts:
-    1. Retkinia (4 km from the center)
-    2. Łódź Kaliska (2 km from the center)
-    3. Śródmieście (0 km from the center)
-    4. Widzew (5 km from the center)
-    5. Janów (7 km from the center)
-    """
+Lista dzielnic
+1. Retkinia (4 km od centrum)
+2. Łódź Kaliska (2 km od centrum)
+3. Śródmieście (0 km od centrum)
+4. Widzew (5 km od centrum)
+5. Janów (7 km od centrum)
+"""
 
-    reservation_screen = "Reservation Screen"
+    reservation_screen = "EKRAN REZERWACJI"
 
     def show_districts():
         print(Messages.district_list)
 
+
+    #Lista dostępnych samochodów
+    
+    def show_available_cars(cars):
+        print("Dostępne taksówki i ich lokalizacja:")
+        for car in cars:
+            status = "Wolny" if car.status else "Zajęty"
+            print(f"Taxi: {car.brand}, Dzielnica: {car.district}, Dystans od centrum: {Car.district_distances[car.district]} km, Status: {status}")
+            
+            
+    #Ekran rezerwacji
+        
     def show_reservation_screen(cars):
         print(Messages.reservation_screen)
-        
+        print("""
+    Lista dzielnic
+    1. Retkinia 
+    2. Łódź Kaliska 
+    3. Śródmieście 
+    4. Widzew 
+    5. Janów 
+    """)
+
         while True:
-            district_choice_input = input("Enter the district number you want to reserve a taxi in: ")
+            district_choice_input = input("Proszę podać numer dzielnicy do której zamawiana jest taksówka: ")
+
             if not district_choice_input.isdigit():
-                print("Please enter a number between 1 and 5.")
+                print("Proszę podać liczbę od 1 do 5.")
                 continue
-            
+
             district_choice = int(district_choice_input)
             
             if 1 <= district_choice <= 5:
-                chosen_district = list(district_distances.keys())[district_choice - 1]
-                closest_car = get_closest_car(cars, chosen_district)
+                chosen_district = list(Car.district_distances.keys())[district_choice - 1]
+                closest_car = min(cars, key=lambda car: Car.compare_distance(car, chosen_district))
                 if closest_car:
-                        print(f"Taxi reserved in {chosen_district} district. Closest available car: {closest_car.brand}")
-                        break
+                    print(f"Taxi zarezerwowana do {chosen_district}. Najbliższy dostępny samochód: {closest_car.brand}")
+                    time_to_arrival = Car.calculate_time_of_arrival(Car.compare_distance(closest_car, chosen_district))
+                    print(f"Do celu: {time_to_arrival} minut/y")
+                    closest_car.status = False
                 else:
-                        print(f"No available cars")
-                        break
+                    print("Brak dostępnych samochodów")
+                break
             else:
-                    print("Invalid district choice.")
-                
-
-    
-    def show_available_cars(cars):
-        print("Available Cars and Their Locations:")
-        for car in cars:
-            status = "Free" if car.status else "Busy"
-            print(f"Car: {car.brand}, District: {car.district}, Distance from center: {district_distances[car.district]} km, Status: {status}")
+                print("Proszę podać liczbę od 1 do 5.")

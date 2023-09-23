@@ -1,13 +1,14 @@
 from Messages import Messages
-from Car import create_random_cars
-
+from Car import Car
 
 
 def main():
    
-    cars = create_random_cars()
+    cars = Car.assign_random_district()
+    print(cars)
+    
     while True:
-        print(Messages.MAIN_MENU)
+        print(Messages.main_menu)
         choice = input()
 
         if choice == '1':
@@ -17,10 +18,10 @@ def main():
         elif choice == '3':
             Messages.show_reservation_screen(cars)
         elif choice == "4":
-            print("Exiting the app.")
+            print("Wychodzenie z aplikacji.")
             break
         else:
-            print("Invalid choice. Please select a valid option.")
+            print("Niepoprawny wybór. Proszę wcisnąc poprawny klawisz")
 
 if __name__ == "__main__":
     main()
